@@ -1,2 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using SupportBank.fileReader;
+
+namespace SupportBank {
+    class SupportBank {
+        public static void Main() {
+            FileReader.ReadCsvFile();
+        }
+    }
+}
