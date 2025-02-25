@@ -1,9 +1,10 @@
-﻿using SupportBank.fileReader;
+﻿using FileReader;
+using SupportBank.Transaction;
 
 namespace SupportBank {
     class SupportBank {
         public static void Main() {
-            FileReader.ReadCsvFile();
+            List<TransactionDetails> transactions = ReadFile.ReadTransactionDetailsFromCsvFile();
         }
     }
 }
