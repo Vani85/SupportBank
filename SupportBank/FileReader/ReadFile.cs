@@ -14,8 +14,12 @@ namespace FileReader {
                     var line = reader.ReadLine();
                     var values = line?.Split(',');
                     if(index != 0) {
-                        TransactionDetails transaction = new TransactionDetails(Utility.DateConverterStringToDate(values[0]), 
-                                    values[1], values[2],values[3], Utility.MoneyConverterStringToInt(values[4]));
+                        TransactionDetails transaction = new TransactionDetails(
+                            Utility.DateConverterStringToDate(values[0]), 
+                            values[1],
+                            values[2],
+                            values[3], 
+                            Utility.MoneyConverterStringToInt(values[4]));
                         transactions.Add(transaction);
                     }
                     index++;   

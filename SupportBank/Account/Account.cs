@@ -7,11 +7,9 @@ namespace Account{
         int AmountBorrowed;
         int AmountLent;
 
-        public Account(string personName,List<TransactionDetails> transactionList,int amountBorrowed,int amountlent){
+        public Account(string personName,List<TransactionDetails> transactionList){
             PersonName = personName;
             TransactionList = transactionList;
-            AmountBorrowed = amountBorrowed;
-            AmountLent = amountlent;
         }
     }
 }
