@@ -2,18 +2,18 @@ using Account;
 namespace Reports{
     class ReportGenerator{
 
-        public static void GenerateReport() {            
+        public static void GenerateReport(AccountHelper accountHelper) {            
             Console.WriteLine("Enter 1 : To see list of Accounts");
             Console.WriteLine("Enter 2 : To see transaction details for a user");
             int userChoice = 0;
             userChoice = Convert.ToInt32(Console.ReadLine());
             if (userChoice == 1){
-                ListAllTransactions(AccountHelper.ListAccounts);
+                ListAllTransactions(accountHelper.ListAccounts);
             }
             else if(userChoice == 2){
                 Console.WriteLine("Enter full name of the user");
                 string username = Console.ReadLine();
-                PrintTransactionDetailsPerAccount(AccountHelper.ListAccounts,username);
+                PrintTransactionDetailsPerAccount(accountHelper.ListAccounts,username);
             }
             else {
                 Console.WriteLine("Please enter 1 0r 2 only");
@@ -42,7 +42,7 @@ namespace Reports{
             Console.WriteLine("+-----------------+-----------------+-----------------+-----------------+-----------------+");
             Console.WriteLine("| {0,-12} | {1,-12} | {2,-10} | {3,-20} | {4,-10} |", "From", "To", "Amount (£)","Activity Name","Date");
             Console.WriteLine("+-----------------+-----------------+-----------------+-----------------+-----------------+");
-            foreach(var transaction in accounts.GetTransactionDetails()) {
+            foreach(var transaction in accounts.TransactionList) {
 
                 Console.WriteLine("| {0,-12} | {1,-12} | {2,-10} | {3,-20} | {4,-10} |", 
                     transaction.TransactionFromPerson, 

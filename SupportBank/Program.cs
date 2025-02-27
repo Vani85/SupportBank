@@ -3,34 +3,30 @@ using Transaction;
 using Account;
 using Reports;
 
-
 namespace SupportBank {
-    class SupportBank {
-        
-        public static List<TransactionDetails>? transactions = null;
+    class SupportBank {        
         public static void Main() {
-            transactions = ReadFile.ReadTransactionDetailsFromCsvFile();
+            List<TransactionDetails> transactions = ReadFile.ReadTransactionDetailsFromCsvFile();
 
+            AccountHelper accountHelper = new AccountHelper();
             foreach (var transaction in transactions){
                 string from = transaction.TransactionFromPerson;
-                string to = transaction.TransactionToPerson;
-                DateTime date = transaction.TransactionDate;
-                string activity = transaction.ActivityName;
+                string to = transaction.TransactionToPerson;                
                 int amount = transaction.TransactionAmount;
 
-                if(!AccountHelper.IsAccountAvailableForUser(from)){
-                    AccountHelper.CreateNewAccount(from);
+                if(!accountHelper.IsAccountAvailableForUser(from)){
+                    accountHelper.CreateNewAccount(from);
                 }
 
-                if(!AccountHelper.IsAccountAvailableForUser(to)){
-                    AccountHelper.CreateNewAccount(to);
+                if(!accountHelper.IsAccountAvailableForUser(to)){
+                    accountHelper.CreateNewAccount(to);
                 }
 
-                AccountHelper.UpdateTransactionDetailsInAccount(from,new TransactionDetails(date,from,to,activity,amount),0,amount);           
-                AccountHelper.UpdateTransactionDetailsInAccount(to,new TransactionDetails(date,from,to,activity,amount),amount,0);
+                accountHelper.UpdateTransactionDetailsInAccount(from,transaction,true);           
+                accountHelper.UpdateTransactionDetailsInAccount(to,transaction,false);
                 
             }
-            ReportGenerator.GenerateReport();
+            ReportGenerator.GenerateReport(accountHelper);
         }
     }
 }
