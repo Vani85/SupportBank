@@ -1,20 +1,36 @@
 using Transaction;
 namespace Account {
     class AccountHelper{
-        public static Dictionary<string,AccountDetails> ListAccounts = new Dictionary<string, AccountDetails>();
+        public Dictionary<string,AccountDetails> ListAccounts = new Dictionary<string, AccountDetails>();
 
-        public static void CreateNewAccount(string personName){
+        public void CreateNewAccount(string personName){
             AccountDetails account = new AccountDetails(personName);
             ListAccounts.Add(personName,account);
         }
 
-        public static void UpdateTransactionDetailsInAccount(string personName,TransactionDetails transactionList,int amountBorrowed,int amountLent){
-            AccountDetails PersonAccount = ListAccounts[personName];
-            PersonAccount.GetTransactionDetails().Add(transactionList);
-            PersonAccount.updateAmount(amountBorrowed, amountLent);            
-        }
+        public void UpdateAccounts(List<TransactionDetails> transactionList){
+            foreach (var transaction in transactionList){
+                string from = transaction.TransactionFromPerson;
+                string to = transaction.TransactionToPerson; 
 
-        public static Boolean IsAccountAvailableForUser(string person) {
+                if(!IsAccountAvailableForUser(from)){
+                    CreateNewAccount(from);
+                }
+
+                if(!IsAccountAvailableForUser(to)){
+                    CreateNewAccount(to);
+                }
+                UpdateTransactionDetailsInAccount(from,transaction,true);  
+                UpdateTransactionDetailsInAccount(to,transaction,false);  
+            }    
+        }
+        
+        private void UpdateTransactionDetailsInAccount(string personName,TransactionDetails transaction, Boolean isLender){
+            AccountDetails PersonAccount = ListAccounts[personName];
+            PersonAccount.addTransaction(transaction, isLender);
+        }
+       
+        private Boolean IsAccountAvailableForUser(string person) {
             return ListAccounts.ContainsKey(person);
         }
     }
