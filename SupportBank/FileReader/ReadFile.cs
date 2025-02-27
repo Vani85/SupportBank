@@ -1,7 +1,10 @@
 using System.Data;
-using NLog;
 using Transaction;
 using Utils;
+using NLog;
+using Logging;
+
+
 namespace FileReader {
     class ReadFile {
         private static readonly ILogger Logger = LogManager.GetLogger("File Logger");
@@ -11,11 +14,11 @@ namespace FileReader {
             string [] FileList = Directory.GetFiles(FolderPath);
             return FileList;
         }
-        public static List<TransactionDetails> ReadTransactionDetailsFromCsvFile(string FileName) {
+        public static List<TransactionDetails> ReadTransactionDetailsFromCsvFile(string FilePath) {
             List<TransactionDetails> transactions = new List<TransactionDetails>();
-            Logger.Info("Reading File: "+ FileName+"........");
+            Logger.Info("Reading File: "+ FilePath +"........");
             try {
-                using(var reader = new StreamReader(@FileName))
+                using(var reader = new StreamReader(@FilePath))
                 {
                     int index = 0;
                     while (!reader.EndOfStream)
@@ -34,14 +37,14 @@ namespace FileReader {
                             }
                             index++;  
                         }catch(System.FormatException exception){
-                            Logger.Error("Error occurred at line " + index + " of file : " + FileName + " : " + exception.Message);
+                            Logger.Error("Error occurred at line " + index + " of file : " + FilePath + " : " + exception.Message);
                         }     
                     }
 
                 } 
-                Logger.Info(FileName+" read successfully and transactions captured");   
+                Logger.Info(FilePath+" read successfully and transactions captured");   
             }catch(FileNotFoundException exception){
-                Logger.Error("Error occured while reading the file :" + FileName +" : "+exception.Message);                
+                Logger.Error("Error occured while reading the file :" + FilePath +" : "+exception.Message);                
             }               
             
             return transactions;    
