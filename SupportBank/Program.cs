@@ -25,18 +25,18 @@ namespace SupportBank {
             string[] FileList = ReadFile.GetListOfAllFiles();
             Logger.Info("There are " +FileList.Count() + " files to be processed"); 
             for (int i = 0; i < FileList.Count(); i++){
-                string FileName = FileList[i];  
-                Console.WriteLine("Do you want to process "+ FileName + " Y / N ?");
+                string FilePath = FileList[i];
+                Console.WriteLine("Do you want to process "+ Path.GetFileName(FilePath) + "? Enter: Y / N ?");
                 if(Console.ReadLine().ToUpper() == "Y"){
-                    ProcessTransactionsForAFile(FileName);
+                    ProcessTransactionsForAFile(FilePath);
                   
                 }
             }
 
         } 
 
-        public static void ProcessTransactionsForAFile(string FileName){
-            List<TransactionDetails> transactions = ReadFile.ReadTransactionDetailsFromCsvFile(FileName);
+        public static void ProcessTransactionsForAFile(string filePath){
+            List<TransactionDetails> transactions = ReadFile.ReadTransactionDetailsFromCsvFile(filePath);
                     
             AccountHelper accountHelper = new AccountHelper();
             accountHelper.UpdateAccounts(transactions);

@@ -16,7 +16,8 @@ namespace FileReader {
         }
         public static List<TransactionDetails> ReadTransactionDetailsFromCsvFile(string FilePath) {
             List<TransactionDetails> transactions = new List<TransactionDetails>();
-            Logger.Info("Reading File: "+ FilePath +"........");
+            string FileName = Path.GetFileName(FilePath);
+            Logger.Info("Reading File: "+ FileName +"........");
             try {
                 using(var reader = new StreamReader(@FilePath))
                 {
@@ -37,14 +38,14 @@ namespace FileReader {
                             }
                             index++;  
                         }catch(System.FormatException exception){
-                            Logger.Error("Error occurred at line " + index + " of file : " + FilePath + " : " + exception.Message);
+                            Logger.Error("Error occurred at line " + index + " of file : " + FileName + " : " + exception.Message);
                         }     
                     }
 
                 } 
-                Logger.Info(FilePath+" read successfully and transactions captured");   
+                Logger.Info(FileName+" read successfully and transactions captured");   
             }catch(FileNotFoundException exception){
-                Logger.Error("Error occured while reading the file :" + FilePath +" : "+exception.Message);                
+                Logger.Error("Error occured while reading the file :" + FileName +" : "+exception.Message);                
             }               
             
             return transactions;    
