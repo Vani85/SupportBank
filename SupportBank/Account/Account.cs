@@ -18,7 +18,7 @@ namespace Account{
             TransactionList = new List<TransactionDetails>();
         }
 
-        public void updateAmount(int amount, Boolean isLender) {
+        private void updateAmount(int amount, Boolean isLender) {
             if(isLender){
                 AmountLent += amount;
             }else{
