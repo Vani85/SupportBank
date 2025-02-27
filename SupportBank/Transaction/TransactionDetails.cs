@@ -1,4 +1,4 @@
-namespace SupportBank.Transaction {
+namespace Transaction {
     class TransactionDetails {
          public DateTime TransactionDate {get;}
          public string TransactionFromPerson {get;}

@@ -1,5 +1,5 @@
 using System.Data;
-using SupportBank.Transaction;
+using Transaction;
 using Utils;
 namespace FileReader {
     class ReadFile {
@@ -15,11 +15,11 @@ namespace FileReader {
                     var values = line?.Split(',');
                     if(index != 0) {
                         TransactionDetails transaction = new TransactionDetails(
-                            Utility.DateConverterStringToDate(values[0]), 
-                            values[1],
-                            values[2],
-                            values[3], 
-                            Utility.MoneyConverterStringToInt(values[4]));
+                            Utility.DateConverterStringToDate(values[0].Trim()), 
+                            values[1].Trim(),
+                            values[2].Trim(),
+                            values[3].Trim(), 
+                            Utility.MoneyConverterStringToInt(values[4].Trim()));
                         transactions.Add(transaction);
                     }
                     index++;   
