@@ -11,8 +11,7 @@ namespace SupportBank {
             AccountHelper accountHelper = new AccountHelper();
             foreach (var transaction in transactions){
                 string from = transaction.TransactionFromPerson;
-                string to = transaction.TransactionToPerson;                
-                int amount = transaction.TransactionAmount;
+                string to = transaction.TransactionToPerson; 
 
                 if(!accountHelper.IsAccountAvailableForUser(from)){
                     accountHelper.CreateNewAccount(from);
@@ -26,7 +25,8 @@ namespace SupportBank {
                 accountHelper.UpdateTransactionDetailsInAccount(to,transaction,false);
                 
             }
-            ReportGenerator.GenerateReport(accountHelper);
+            ReportGenerator reports = new ReportGenerator();
+            reports.GenerateReport(accountHelper);
         }
     }
 }
