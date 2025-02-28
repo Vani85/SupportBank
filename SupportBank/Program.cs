@@ -4,10 +4,6 @@ using Account;
 using Reports;
 using NLog;
 using Logging;
-//using NLog.Targets;
-//using NLog.Config;
-//using NLog.LayoutRenderers;
-
 
 namespace SupportBank {
     class SupportBank {
@@ -21,7 +17,7 @@ namespace SupportBank {
             Logger.Info("*********************************************************"); 
         } 
 
-        public static void ProcessInputFiles(){
+        private static void ProcessInputFiles(){
             string[] FileList = ReadFile.GetListOfAllFiles();
             Logger.Info("There are " +FileList.Count() + " files to be processed"); 
             for (int i = 0; i < FileList.Count(); i++){
@@ -29,15 +25,20 @@ namespace SupportBank {
                 Console.WriteLine("Do you want to process "+ Path.GetFileName(FilePath) + "? Enter: Y / N ?");
                 if(Console.ReadLine().ToUpper() == "Y"){
                     ProcessTransactionsForAFile(FilePath);
-                  
                 }
             }
 
+            Console.WriteLine("Processed all files in the folder.");
+
         } 
 
-        public static void ProcessTransactionsForAFile(string filePath){
-            List<TransactionDetails> transactions = ReadFile.ReadTransactionDetailsFromCsvFile(filePath);
-                    
+        private static void ProcessTransactionsForAFile(string filePath){
+            List<TransactionDetails> transactions = null;
+            if(Path.GetExtension(filePath).Contains("csv")) {
+                transactions = ReadFile.ReadTransactionDetailsFromCsvFile(filePath);
+            } else if(Path.GetExtension(filePath).Contains("json")) {
+                transactions = ReadFile.ReadTransactionDetailsFromJsonFile(filePath);
+            }
             AccountHelper accountHelper = new AccountHelper();
             accountHelper.UpdateAccounts(transactions);
             ReportGenerator reports = new ReportGenerator();

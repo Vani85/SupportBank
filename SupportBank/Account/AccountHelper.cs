@@ -17,8 +17,8 @@ namespace Account {
 
         public void UpdateAccounts(List<TransactionDetails> transactionList){
             foreach (var transaction in transactionList){
-                string from = transaction.TransactionFromPerson;
-                string to = transaction.TransactionToPerson; 
+                string from = transaction.FromAccount;
+                string to = transaction.ToAccount; 
 
                 if(!IsAccountAvailableForUser(from)){
                     CreateNewAccount(from);

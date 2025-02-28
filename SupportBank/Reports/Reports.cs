@@ -10,7 +10,8 @@ namespace Reports{
             while(true) {         
                 Console.WriteLine("Enter 1 : To see list of Accounts");
                 Console.WriteLine("Enter 2 : To see transaction details for a user");
-                Console.WriteLine("Enter 3 : Exit");
+                Console.WriteLine("Enter 3 : Return to main menu");
+                Console.WriteLine("Enter 4 : Exit");
                 int userChoice = 0;
                 userChoice = Convert.ToInt32(Console.ReadLine());
                 if (userChoice == 1){
@@ -25,17 +26,19 @@ namespace Reports{
                             break;
                         }
                         else{
-                            Logger.Error("Invalid Username");
-                            Console.WriteLine("Please enter a valid username. The user is not available in our system");
+                            Logger.Warn("User has entered invalid username ("+username+") to get report for. Asking again.");
+                            Console.WriteLine(username+ " is not available in our system.Please enter a valid username.");
                         }
                     }  
+                } else if(userChoice == 3){
+                    return;
                 }
-                else if(userChoice == 3){
+                else if(userChoice == 4){
                     Environment.Exit(0);
                 }
                 else {
-                    Logger.Error("Invalid Option");
-                    Console.WriteLine("Please enter a valid option from below :");
+                    Logger.Error(userChoice+" is not a valid option.Please enter a valid option from below :");
+                    Console.WriteLine(userChoice+" is not a valid option.Please enter a valid option from below :");
                 }
             }    
         }
@@ -74,11 +77,11 @@ namespace Reports{
             foreach(var transaction in accounts.TransactionList) {
 
                 Console.WriteLine("| {0,-12} | {1,-12} | {2,-10} | {3,-40} | {4,-10} |", 
-                    transaction.TransactionFromPerson, 
-                    transaction.TransactionToPerson ,
-                    (float)transaction.TransactionAmount/100, 
-                    transaction.ActivityName,
-                    transaction.TransactionDate.ToShortDateString());
+                    transaction.FromAccount, 
+                    transaction.ToAccount ,
+                    transaction.Amount, 
+                    transaction.Narrative,
+                    transaction.Date.ToShortDateString());
             }
             Console.WriteLine("+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+");
   

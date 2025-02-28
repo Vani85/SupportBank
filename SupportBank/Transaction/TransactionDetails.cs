@@ -1,19 +1,21 @@
-namespace Transaction {
-    class TransactionDetails {
-         public DateTime TransactionDate {get;}
-         public string TransactionFromPerson {get;}
-         public string TransactionToPerson {get;}
-         public string ActivityName {get;}
-         public int TransactionAmount {get;}
+using Utils;
 
-        public TransactionDetails(DateTime transactionDate, string transactionFromPerson, string transactionToPerson,
-        string activityName, int transactionAmount)
+namespace Transaction {
+    public class TransactionDetails {
+         public DateTime Date {get;}
+         public string FromAccount {get;}
+         public string ToAccount {get;}
+         public string Narrative {get;}
+         public float Amount {get;}
+
+        public TransactionDetails(DateTime date, string fromAccount, string toAccount,
+        string narrative, float amount)
         {
-            TransactionDate = transactionDate;
-            TransactionFromPerson = transactionFromPerson;
-            TransactionToPerson = transactionToPerson;
-            ActivityName = activityName;
-            TransactionAmount = transactionAmount;
+            Date = date;
+            FromAccount = fromAccount;
+            ToAccount = toAccount;
+            Narrative = narrative;
+            Amount = amount;            
         }   
 
     }

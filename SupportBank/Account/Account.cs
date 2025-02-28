@@ -18,17 +18,18 @@ namespace Account{
             TransactionList = new List<TransactionDetails>();
         }
 
-        private void updateAmount(int amount, Boolean isLender) {
+        private void updateAmount(float amount, Boolean isLender) {
+            int AmountInPence = Convert.ToInt32(amount * 100);
             if(isLender){
-                AmountLent += amount;
+                AmountLent += AmountInPence;
             }else{
-                AmountBorrowed += amount;  
+                AmountBorrowed += AmountInPence;  
             }      
         }
 
         public void addTransaction(TransactionDetails transaction, Boolean isLender) {
             TransactionList.Add(transaction);
-            updateAmount(transaction.TransactionAmount, isLender);
+            updateAmount(transaction.Amount, isLender);
         }
     }
 }
